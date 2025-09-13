@@ -1,0 +1,96 @@
+<h2 class="mb-4 fw-bold text-warning mt-4 ">📋 Blogs:
+  <% if (user) { %>
+  <h2>Welcome: <%= user.username %></h2>
+  <% } else { %>
+  <h2>Welcome, guest!</h2>
+  <p>Please <a href="/login">log in</a></p>
+  <span>Or</span>
+  <div class="mt-4 mb-4"> <a href="/exit-guest" class="btn btn-outline-secondary">Exit</a>
+  </div>
+
+  <% } %>
+</h2>
+
+<% if(items.length > 0){ %>
+<div class="table-responsive">
+  <table  class="table table-striped shadow-sm align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Status</th>
+        <th scope="co1" class="text-end">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% items.forEach((item, i) => { %>
+      <tr>
+        <th scope="row"><%= i + 1 %></th>
+        <td><%= item.title %></td>
+        <td>
+          <span class="badge <%= item.done ? 'bg-success' : 'bg-warning text-dark' %>">
+            <%= item.done ? 'Done' : 'Pending' %>
+          </span>
+        </td>
+        <td class="text-end">
+          <a href="/blog/<%= item._id %>/view" class="btn btn-info btn-sm me-1 mt-2">View</a>
+          <form action="/blog/<%= item._id %>/delete" method="POST" class="d-inline">
+            <button type="submit" class="btn btn-danger btn-sm mt-2">Delete</button>
+          </form>
+        </td>
+
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% } else { %>
+<div class="alert alert-warning" role="alert">
+  There are no blog created yet. Please create one!
+</div>
+<% } %>
+
+<div class="container">
+  <div class="d-flex justify-content-between mb-3">
+    <a href="/blog/create" class="btn btn-success">Create New Blog</a>
+  </div>
+
+</div>
+
+<hr class="my-5">
+<h2 class="mb-4 fw-bold text-primary">🌍 All Users & Blogs</h2>
+
+<% if (allBlogs.length > 0) { %>
+<div class="table-responsive">
+  <table class="table table-striped shadow-sm align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>User</th>
+        <th>Blog Title</th>
+        <th>Status</th>
+        <th class="text-end">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% allBlogs.forEach((blog, i) => { %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td class="text-danger"><%= blog.userId.username %></td>
+        <td><%= blog.title %></td>
+        <td>
+          <span class="badge <%= blog.done ? 'bg-success' : 'bg-warning text-dark' %>">
+            <%= blog.done ? 'Done' : 'Pending' %>
+          </span>
+        </td>
+        <td class="text-end">
+          <a href="/blog/<%= blog._id %>/onlyView" class="btn btn-info btn-sm me-1">View</a>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% } else { %>
+<div class="alert alert-warning">No blogs found in database.</div>
+<% } %>

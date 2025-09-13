@@ -1,0 +1,53 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-lg rounded-4">
+      <div class="card-body p-4">
+        <h3 class="text-center mb-4">Sign Up</h3>
+        <form action="/user-signup-ok" method="post">
+          <!-- username -->
+          <div class="mb-3">
+            <label for="username" class="form-label">User Name</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username"
+              required>
+          </div>
+
+          <!-- email -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+          </div>
+
+          <!-- password -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter a password"
+              required>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
+              placeholder="Enter your phone number" required>
+          </div>
+
+          <!-- address -->
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <textarea class="form-control" id="address" name="address" rows="2" placeholder="Enter your address"
+              required></textarea>
+          </div>
+          <!-- Submit Button -->
+          <div class="d-flex justify-content-between me-3 mb-3">
+            <button type="submit" class="btn btn-primary p-3 w-50 me-3">Sign-Up</button>
+            <a href="/" class="btn btn-secondary p-3 w-50">Cancel</a>
+          </div>
+        </form>
+
+        <!-- <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="note-card mt-5">
+  <h2 class="mb-4 text-warning">✏️ Edit Blog</h2>
+  <form action="/blog/<%=  editBlog._id %>/save-edit" method="POST">
+    <div class="mb-3">
+      <div class="title">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" name="title" class="form-control" value="<%=  editBlog.title  %>" required>
+      </div>
+
+      
+    </div>
+    <div class="mb-3">
+      <label for="body" class="form-label">description </label>
+      <textarea name="body" class="form-control" rows="5" required><%=  editBlog.body  %></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="/blog/<%=  editBlog._id  %>/edit/cancel" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+

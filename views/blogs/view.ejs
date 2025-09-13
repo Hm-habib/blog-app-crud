@@ -1,0 +1,17 @@
+
+
+<div class=" mt-5 note-card card shadow-lg p-4" >
+  <h2 class="mb-3 text-warning">Title: <%= viewItem.title %></h2>
+  <p class="fs-5"> description:  <%= viewItem.body %></p>
+  <p>Status: <span class="badge <%= viewItem.done ? 'bg-success' : 'bg-warning text-dark'  %>">
+    <%= viewItem.done ? "Done" : "Pending"  %></span></p>
+  <div class="mt-3">
+    <%  { %>
+      <form action="/blog/<%= viewItem._id %>/markDone" method="POST" class="d-inline">
+        <button class="btn btn-warning me-2">Mark as Done</button>
+      </form>
+    <% } %>
+    <a href="/blog/<%= viewItem._id  %>/edit" class="btn btn-secondary me-2">Edit</a>
+    <a href="/blog/<%= viewItem._id  %>/back" class="btn btn-outline-primary">Back</a>
+  </div>
+</div>
