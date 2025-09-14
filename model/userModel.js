@@ -15,7 +15,14 @@ const userSchema = new Schema({
   password: { type: String, required: true, minLength: 6, maxLength: 16 },
   phoneNumber: String,
   address: String,
+
+   role: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user", // all new users are normal users
+  },
 });
+
 
 // before password save database is not modified then next
 userSchema.pre("save", async function (next) {

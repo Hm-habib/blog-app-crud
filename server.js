@@ -32,14 +32,11 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(layout);
 
-const blogRoute = require("./routes/blogRoutes");
-app.use("/", blogRoute);
 
-const userRoute = require("./routes/usersRoutes");
-app.use("/", userRoute);
 
-const guestRoute = require("./routes/guestRoutes");
-app.use("/", guestRoute);
+require("./routes")(app);
+
+
 
 
 app.listen(port, () => {

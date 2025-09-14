@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const userModel = require("../model/userModel");
 const blogModel = require("../model/blogModel");
 
-// logIn btn to mainInterface
+// logIn btn to mainInterface, mainInterface = views/index
 const loggedInUser =  async (req, res) => {
   const { username, password } = req.body;
 

@@ -1,8 +1,9 @@
 
 
 <div class=" mt-5 note-card card shadow-lg p-4" >
+  <h2>Author:  <%= user.username %>  </h2>
   <h2 class="mb-3 text-warning">Title: <%= viewItem.title %></h2>
-  <p class="fs-5"> description:  <%= viewItem.body %></p>
+  <p class="fs-5"> Description:  <%= viewItem.body %></p>
   <p>Status: <span class="badge <%= viewItem.done ? 'bg-success' : 'bg-warning text-dark'  %>">
     <%= viewItem.done ? "Done" : "Pending"  %></span></p>
   <div class="mt-3">
