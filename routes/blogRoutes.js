@@ -8,53 +8,22 @@ const blogController = require("../controller/blogController");
 router.get("/", blogController.runStart);
 
 // blog create btn to create form 
-router.get("/blog/create", (req, res) => {
-  res.render("blogs/create");
-});
+router.get("/blog/create", blogController.blogsCreate)
 
 // blog save btn to mainInterface 
-router.post("/blog/save", async (req, res) => {
-  let runningUser = req.session.user;
-  if (!runningUser) {
-    return res.redirect("/login"); 
-  }
-
-  let blog = new blogModel({
-    title: req.body.title,
-    body: req.body.body,
-    done: false,
-    userId: runningUser._id, 
-  });
-
-  await blog.save();
-  res.redirect("/mainInterface");
-});
+router.post("/blog/save",blogController.blogsSave);
 
 // view btn to view page
-router.get("/blog/:id/view", async (req, res) => {
-  let runningUser = req.session.user;
-  let blog = await blogModel.findById(req.params.id);
-  res.render("blogs/view", { viewItem: blog, user: runningUser });
-});
+router.get("/blog/:id/view",blogController.blogView);
 
 // all blogs view btn to onlyView page
-router.get("/blog/:id/onlyView", async (req, res) => {
-  let runningUser = req.session.user;
-  let blog = await blogModel.findById(req.params.id);
-  res.render("blogs/onlyView", { blog: blog, user: runningUser });
-});
+router.get("/blog/:id/onlyView",blogController.blogOnlyView);
 
 // back btn to mainInterface 
-router.get("/blog/:id/back", (req, res) => {
-  res.redirect("/mainInterface");
-});
+router.get("/blog/:id/back",blogController.backBTN);
 
 // edit btn to edit page
-router.get("/blog/:id/edit", async (req, res) => {
-  let runningUser = req.session.user;
-  let blog = await blogModel.findById(req.params.id);
-  res.render("blogs/edit", { editBlog: blog, user: runningUser });
-});
+router.get("/blog/:id/edit",blogController.editPage);
 
 // save edit btn to view page
 router.post("/blog/:id/save-edit", async (req, res) => {
