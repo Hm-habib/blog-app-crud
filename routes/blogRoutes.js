@@ -1,79 +1,44 @@
-const { ObjectId } = require("mongodb");
 const express = require("express");
 const router = express.Router();
-const blogModel = require("../model/blogModel");
 const blogController = require("../controller/blogController");
+const { isAuthenticated } = require('../middleware/authMiddleware')
 
-// port=3000 run to homePage
-router.get("/", blogController.runStart);
 
-// blog create btn to create form 
-router.get("/blog/create", blogController.blogsCreate)
+// blog create btn to create form
+router.get("/blog/create",isAuthenticated, blogController.blogsCreate);
 
-// blog save btn to mainInterface 
-router.post("/blog/save",blogController.blogsSave);
+// blog save btn to mainInterface
+router.post("/blog/save",isAuthenticated, blogController.blogsSave);
 
 // view btn to view page
-router.get("/blog/:id/view",blogController.blogView);
+router.get("/blog/:id/view",isAuthenticated, blogController.blogView);
 
 // all blogs view btn to onlyView page
-router.get("/blog/:id/onlyView",blogController.blogOnlyView);
+router.get("/blog/:id/onlyView", blogController.blogOnlyView);
 
-// back btn to mainInterface 
-router.get("/blog/:id/back",blogController.backBTN);
+// back btn to mainInterface
+router.get("/blog/:id/back",isAuthenticated, blogController.backBTN);
 
 // edit btn to edit page
-router.get("/blog/:id/edit",blogController.editPage);
+router.get("/blog/:id/edit",isAuthenticated, blogController.editPage);
 
 // save edit btn to view page
-router.post("/blog/:id/save-edit", async (req, res) => {
-  let blog = await blogModel.findByIdAndUpdate(req.params.id)
-  blog.title = req.body.title;
-  blog.body = req.body.body;
-  blog.done = false;
-
-  await blog.save();
-  res.redirect(`/blog/${req.params.id}/view`);
-});
+router.post("/blog/:id/save-edit",isAuthenticated, blogController.saveEditToView);
 
 // edit cancel btn to view page
-router.get("/blog/:id/edit/cancel", (req, res) => {
+router.get("/blog/:id/edit/cancel",  isAuthenticated,(req, res) => {
   res.redirect(`/blog/${req.params.id}/view`);
 });
 
 // markDone btn to refresh view page and markDone complete
-router.post("/blog/:id/markDone", async (req, res) => {
-  let blog = await blogModel.findByIdAndUpdate(req.params.id);
-  blog.done = true;
-  await blog.save();
-  res.redirect(`/blog/${req.params.id}/view`);
-});
+router.post("/blog/:id/markDone",isAuthenticated, blogController.markDone);
 
 // delete btn to refresh mainInterface and delete item
-router.post("/blog/:id/delete", async (req, res) => {
-  const runningUser = req.session.user;
-  if (!runningUser) {
-    return res.status(401).send("Please log in");
-  }
+router.post("/blog/:id/delete",isAuthenticated, blogController.deleteBTN);
 
-  const blog = await blogModel.findById(req.params.id);
-  if (!blog) return res.status(404).send("Blog not found");
-
-  // Admin can delete any blog OR user can delete their own blog
-  if (runningUser.role !== "admin" && blog.userId.toString() !== runningUser._id.toString()) {
-    return res.status(403).send("Unauthorized to delete this blog");
-  }
-
-  await blogModel.findByIdAndDelete(req.params.id);
+// create cancel btn to mainInterface
+router.get("/blog/create/cancel", isAuthenticated, (req, res) => {
   res.redirect("/mainInterface");
 });
-
-
-// create cancel btn to mainInterface 
-router.get("/blog/create/cancel",(req, res) => {
-  res.redirect("/mainInterface");
-})
-
-
 
 module.exports = router;

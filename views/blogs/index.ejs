@@ -2,8 +2,8 @@
   <% if (user) { %>
   <h2>Welcome: <%= user.username %></h2>
   <% } else { %>
-  <h2>Welcome, guest!</h2>
-  <p>Please <a href="/login">log in</a></p>
+  <h2>Welcome, guest</h2>
+  <p>Please &ensp;<a href="/login">log in</a> <span> / &ensp;</span> <a href="/signup-user">Signup</a> </p> 
   <span>Or</span>
   <div class="mt-4 mb-4"> <a href="/exit-guest" class="btn btn-outline-secondary">Exit</a>
   </div>
@@ -18,7 +18,7 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Title</th>
-        <th>Date:</th>
+        <th scope="col">Last Update:</th>
         <th scope="col">Status</th>
         <th scope="co1" class="text-end">Actions</th>
       </tr>
@@ -28,7 +28,7 @@
       <tr>
         <th scope="row"><%= i + 1 %></th>
         <td><%= item.title %></td>
-        <td> <%= item.createdAt  %> </td>
+        <td> <%= item.updatedAt  %> </td>
         <td>
           <span class="badge <%= item.done ? 'bg-success' : 'bg-warning text-dark' %>">
             <%= item.done ? 'Done' : 'Pending' %>
@@ -68,11 +68,12 @@
   <table class="table table-striped shadow-sm align-middle">
     <thead class="table-dark">
       <tr>
-        <th>#</th>
-        <th>User</th>
-        <th>Blog Title</th>
-        <th>Status</th>
-        <th class="text-end">Actions</th>
+        <th scope="col">#</th>
+        <th scope="col">Author</th>
+        <th scope="col">Blog Title</th>
+        <th scope="col">Last Update</th>
+        <th scope="col">Status</th>
+        <th scope="col" class="text-end">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -81,6 +82,7 @@
         <td><%= i + 1 %></td>
         <td class="text-danger"><%= blog.userId.username %></td>
         <td><%= blog.title %></td>
+        <td><%= blog.updatedAt  %> </td>
         <td>
           <span class="badge <%= blog.done ? 'bg-success' : 'bg-warning text-dark' %>">
             <%= blog.done ? 'Done' : 'Pending' %>

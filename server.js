@@ -36,6 +36,11 @@ app.use(layout);
 
 require("./routes")(app);
 
+// port=3000 run to homePage
+app.get("/", (req, res) => {
+  res.render("index");
+});
+
 
 
 
