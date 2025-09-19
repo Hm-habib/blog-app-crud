@@ -63,9 +63,10 @@ const signupToLogin = async (req, res) => {
 
     let user = new userModel(req.body);
 
-    await user.save();
     req.session.user = user;
-    res.render("users/login");
+    await user.save();
+
+    return res.render("users/login");
   } catch (err) {
     if (err.code === 11000) {
     } else if (err.name === "ValidationError") {
