@@ -61,55 +61,55 @@
 </div>
 
 <div class="container">
-<hr class="my-5">
-<h2 class="mb-4 fw-bold text-primary fs-4 fs-md-2">🌍 All Users & Blogs</h2>
+  <hr class="my-5">
+  <h2 class="mb-4 fw-bold text-primary fs-4 fs-md-2">🌍 All Users & Blogs</h2>
 
 
-<% if (allBlogs.length > 0) { %>
-<div class="table-responsive">
-  <table class="table table-striped shadow-sm align-middle">
-    <thead class="table-dark">
-      <tr>
-        <th>#</th>
-        <th>Author</th>
-        <th>Blog Title</th>
-        <th class="d-none d-md-table-cell">Last Update</th>
-        <th class="d-none d-sm-table-cell">Status</th>
-        <th class="text-end">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% allBlogs.forEach((blog, i) => { %>
-      <tr>
-        <td><%= i + 1 %></td>
-        <td class="text-danger"><%= blog.userId.username %></td>
-        <td><%= blog.title %></td>
-        <td class="d-none d-md-table-cell"><%= blog.updatedAt %></td>
-        <td class="d-none d-sm-table-cell">
-          <span class="badge <%= blog.done ? 'bg-success' : 'bg-warning text-dark' %>">
-            <%= blog.done ? 'Done' : 'Pending' %>
-          </span>
-        </td>
-        <td class="text-end">
-          <a href="/blog/<%= blog._id %>/onlyView"
-            class="btn btn-info btn-sm d-block d-md-inline-block w-100 w-md-auto mb-1">View</a>
+  <% if (allBlogs.length > 0) { %>
+  <div class="table-responsive">
+    <table class="table table-striped shadow-sm align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Author</th>
+          <th>Blog Title</th>
+          <th class="d-none d-md-table-cell">Last Update</th>
+          <th class="d-none d-sm-table-cell">Status</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% allBlogs.forEach((blog, i) => { %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td class="text-danger"> <%= blog.userId ? blog.userId.username : "Unknown User" %></td>
+          <td><%= blog.title %></td>
+          <td class="d-none d-md-table-cell"><%= blog.updatedAt %></td>
+          <td class="d-none d-sm-table-cell">
+            <span class="badge <%= blog.done ? 'bg-success' : 'bg-warning text-dark' %>">
+              <%= blog.done ? 'Done' : 'Pending' %>
+            </span>
+          </td>
+          <td class="text-end">
+            <a href="/blog/<%= blog._id %>/onlyView"
+              class="btn btn-info btn-sm d-block d-md-inline-block w-100 w-md-auto mb-1">View</a>
 
-          <% if (user && user.role === "admin") { %>
-          <form action="/blog/<%= blog._id %>/delete" method="POST" class="d-inline">
-            <button type="submit"
-              class="btn btn-danger btn-sm d-block d-md-inline-block w-100 w-md-auto mb-1">Delete</button>
-          </form>
-          <% } %>
-        </td>
-      </tr>
-      <% }) %>
-    </tbody>
-  </table>
-</div>
-<% } else { %>
-<div class="alert alert-warning">
-  <p> No blogs found in the database.
-</p>
-</div>
-<% } %>
+            <% if (user && user.role === "admin") { %>
+            <form action="/blog/<%= blog._id %>/delete" method="POST" class="d-inline">
+              <button type="submit"
+                class="btn btn-danger btn-sm d-block d-md-inline-block w-100 w-md-auto mb-1">Delete</button>
+            </form>
+            <% } %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% } else { %>
+  <div class="alert alert-warning">
+    <p> No blogs found in the database.
+    </p>
+  </div>
+  <% } %>
 </div>

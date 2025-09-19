@@ -20,20 +20,25 @@ const loggedInUser = async (req, res) => {
 };
 
 const mainInterface = async (req, res) => {
-  let runningUser = req.session.user || null; // guest = null
+  try {
+    let runningUser = req.session.user || null; // guest = null
 
-  let blogs = [];
-  if (runningUser) {
-    blogs = await blogModel.find({ userId: runningUser._id });
+    let blogs = [];
+    if (runningUser) {
+      blogs = await blogModel.find({ userId: runningUser._id });
+    }
+
+    const allBlogs = await blogModel.find().populate("userId", "username");
+
+    res.render("blogs/index", {
+      items: blogs,
+      user: runningUser || null,
+      allBlogs,
+    });
+  } catch (err) {
+    console.error("Error in mainInterface:", err.message);
+    res.status(500).send("Something went wrong!");
   }
-
-  const allBlogs = await blogModel.find().populate("userId", "username");
-
-  res.render("blogs/index", {
-    items: blogs,
-    user: runningUser || null,
-    allBlogs,
-  });
 };
 
 const signupToLogin = async (req, res) => {
