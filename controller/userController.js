@@ -28,8 +28,7 @@ const mainInterface = async (req, res) => {
       blogs = await blogModel.find({ userId: runningUser._id });
     }
 
-    const allBlogs = await blogModel.find().populate("userId", "username");
-
+    let allBlogs = await blogModel.find().populate("userId", "username");
     res.render("blogs/index", {
       items: blogs,
       user: runningUser || null,
