@@ -15,12 +15,11 @@ const blogSchema = new Schema(
       required: true,
     },
     formattedDate: {
-      type: String, 
+      type: String,
     },
   },
   { timestamps: true }
 );
-
 // ✨ Pre-save hook: blog.save() এর আগে formattedDate সেট হবে
 blogSchema.pre("save", function (next) {
   if (this.updatedAt) {
