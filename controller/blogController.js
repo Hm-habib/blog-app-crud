@@ -61,23 +61,29 @@ const markDone = async (req, res) => {
 };
 
 const deleteBTN = async (req, res) => {
-  const runningUser = req.session.user;
-  if (!runningUser) {
-    return res.status(401).send("Please log in");
+  try {
+    const runningUser = req.session.user;
+    if (!runningUser) {
+      return res.status(401).send("Please log in");
+    }
+
+    const blog = await blogModel.findById(req.params.id);
+    if (!blog) return res.status(404).send("Blog not found");
+
+    // Admin can delete any blog OR user can delete their own blog
+    if (
+      runningUser.role !== "admin" &&
+      blog.userId.toString() !== runningUser._id.toString()
+    ) {
+      return res.status(403).send("Unauthorized to delete this blog");
+    }
+
+    await blogModel.findByIdAndDelete(req.params.id);
+  } catch (error) {
+    console.error("Error deleting blog:", error);
+    return res.status(500).send("Internal Server Error");
   }
 
-  const blog = await blogModel.findById(req.params.id);
-  if (!blog) return res.status(404).send("Blog not found");
-
-  // Admin can delete any blog OR user can delete their own blog
-  if (
-    runningUser.role !== "admin" &&
-    blog.userId.toString() !== runningUser._id.toString()
-  ) {
-    return res.status(403).send("Unauthorized to delete this blog");
-  }
-
-  await blogModel.findByIdAndDelete(req.params.id);
   res.redirect("/mainInterface");
 };
 

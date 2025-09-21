@@ -42,13 +42,13 @@ const mainInterface = async (req, res) => {
 
 const signupToLogin = async (req, res) => {
   try {
-    const { username, email } = req.body;
+    const { username, email, password, confirmPassword } = req.body;
 
     let existingUsername = await userModel.findOne({ username });
     if (existingUsername) {
       return res
         .status(400)
-        .send("This username already taken , please enter unique username!");
+        .send(  "This username already taken , please enter unique username!");
     }
 
     let existingUserEmail = await userModel.findOne({ email });
@@ -58,6 +58,13 @@ const signupToLogin = async (req, res) => {
         .send(
           "This email already has been stored in database,  please enter unique email address."
         );
+    }
+
+    // 1. Confirm password check
+    if (password !== confirmPassword) {
+      return res
+        .status(400)
+        .send("Password and Confirm Password do not match!");
     }
 
     let user = new userModel(req.body);
