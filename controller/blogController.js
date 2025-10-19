@@ -28,9 +28,8 @@ const blogView = async (req, res) => {
 };
 
 const blogOnlyView = async (req, res) => {
-  let runningUser = req.session.user;
   let blog = await blogModel.findById(req.params.id);
-  res.render("blogs/onlyView", { blog: blog, user: runningUser });
+  res.render("blogs/onlyView", { blog: blog,});
 };
 
 const backBTN = (req, res) => {
